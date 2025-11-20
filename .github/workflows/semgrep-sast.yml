@@ -1,0 +1,22 @@
+name: Semgrep SAST
+
+on:
+  push:
+
+jobs:
+  semgrep:
+    name: Run Semgrep SAST
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Semgrep scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/ci        # Use Semgrep's recommended CI ruleset
+          generateSarif: false
